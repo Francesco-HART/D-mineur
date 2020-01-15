@@ -93,25 +93,88 @@ function resetChrono()
 function makeGrid(dim) {
 	container.style.setProperty('--grid-dim', dim);
 	container.style.setProperty('--grid-dim', dim);
-	for (i = 0; i < (dim * dim); i++) {
-		let cell = document.createElement("div");
-		setTimeout(2)
-		cell.id = ""+i
-		cell.className = "safe"
-		container.appendChild(cell)
+
+	tableGrid =[]
+	for (let i = 0; i < (dim ); i++) {
+		containerRow = document.createElement('div')
+		containerRow.id =''+i
+		containerRow.style='display:flex;justify-content:center;align-content:center;'
+
+		tableRow=[]
+		for (let j = 0; j < (dim); j++) {
+			let cell = document.createElement("button");
+
+			containerRow.appendChild(cell)
+			cell.id = i+"|"+j
+			cell.className = "safe"
+			cell.style='background:red;width:20px; height:20px;'
+			containerRow.appendChild(cell)
+
+			tableRow.push(0)
+		}
+		container.appendChild(containerRow)
+		tableGrid.push(tableRow)
 	};
+	console.log(tableGrid)
+
 };
 
 
 function makeBomb (nbBomb) {
 	for(i = 0; i < nbBomb; i++) {
-		placeBomb = Math.floor(Math.random() * (Math.pow(select.value, 2)))
-		if (document.getElementById(placeBomb).className === "bomb") {
-			i--
-		} else	{
-			document.getElementById(placeBomb).className = "bomb"
+		randomRow = Math.floor(Math.random() * tableRow.length)
+		randomColumn = Math.floor(Math.random() * tableGrid.length )
+
+		if(tableGrid[randomRow][randomColumn]===0){
+			document.getElementById(randomRow + "|" + randomColumn).className = "bomb"
+			document.getElementById(randomRow + "|" + randomColumn).style='background:green;'
+			tableGrid[randomRow][randomColumn]=9
+
+			for(var c=-1; c<=1; c++) {
+				for (var j = -1; j <= 1; j++) {
+					console.log(c + "  " + j   +  " coordonné: " + randomRow + " , " + randomColumn)
+
+					/*
+					if((randomColumn!==0 && randomRow!==0) && (randomColumn!==tableRow.length-1 && randomRow!==tableRow.length-1) && (c!==0 || j!==0)){
+						tableGrid[randomRow+c][randomColumn+j]+=1;
+					}
+
+					if ((randomRow === 0 && randomColumn !== 0) && (c!==0 || j!==0) ){
+						tableGrid[randomRow][randomColumn+j]+=1;
+					}*/
+					if(c!==0 || j!==0){
+						if(tableGrid[randomRow+c][randomColumn+j]!==9){
+							if (randomColumn!=0 || randomColumn!=tableGrid.length){
+								tableGrid[randomRow+c][randomColumn]+=1;
+							}
+							else if (randomRow!=0 || randomRow!=tableGrid.length){
+								tableGrid[randomRow][randomColumn+j]+=1;
+							}
+						}
+
+					}
+
+
+
+					/*
+					if((c!==0 || j!==0) && tableGrid[randomRow][randomColumn]===9){
+						tableGrid[randomRow+c][randomColumn+j]+=1;
+					}
+					/*
+					if ((randomColumn!==0 && randomRow!==0) && (randomColumn!==tableRow.length-1 && randomRow!==tableRow.length-1) && ){
+
+					}*/
+
+				}
+			}
+
 			console.log("bomb")
+			}
+			else{
+			i--
+			}
+
 		}
-	}
 
 }
+
