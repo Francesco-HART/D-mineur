@@ -3,13 +3,11 @@ var new_p = document.createElement('p');
 new_p.textContent = "coizecozico";
 b.prepend(new_p);*/
 
-select = document.getElementById('select')
+select = document.getElementById('select');
+gameSection = document.getElementById('game');
 
 
 
-
-function getValue(){
-}
 
 
 function newGame(){
@@ -28,4 +26,8 @@ function newGame(){
 	}
 	console.log(nbBombes);
 }	
+
+
+
+
 
