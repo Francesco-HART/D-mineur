@@ -1,11 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang='fr'>
 	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="assets/style.css" />
 		<title>Démineur</title>
 	</head>
-	<body>
 
-		<script type="text/javascript" src="./assets/style.js">
+
+	<body>
+		<header>
+			<h1>Démineur</h1>
+		</header>
+
+
+		<section id='setup'>
+			<select id="select">
+				<option value="9">debutant (9x9, 10 bombes)</option>
+				<option value="16">intermediaire (16x16, 40 bombes)</option>
+				<option value="22">expert (22x22, 100 bombes)</option>
+				<option value="30">maitre (30x30, 250 bombes)</option>
+			</select>
+			<button id='buttonNewGame' onclick="newGame();">nouvelle partie</button>
+			<div id='chrono'>
+				
+			</div>
+		</section>
+
+
+		<section id="game">
+			
+		</section>
+
+
+		<script type="text/javascript" src="assets/style.js">
 		</script>
 	</body>
 </html>
