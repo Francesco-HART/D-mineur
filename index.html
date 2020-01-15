@@ -4,6 +4,10 @@
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="assets/style.css" />
 		<title>Démineur</title>
+		<script
+				src="https://code.jquery.com/jquery-3.4.1.js"
+				integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+				crossorigin="anonymous"></script>
 	</head>
 
 
@@ -24,9 +28,10 @@
 			<button id='buttonNewGame' onclick="newGame();">nouvelle partie</button>
 			
 			<div id='chrono'>
-				<p>
+				<span>
 					Temps: 
-				</p>
+				</span>
+				<span id="time">00:00</span>
 			</div>
 		</section>
 
