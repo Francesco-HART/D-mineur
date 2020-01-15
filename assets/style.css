@@ -1,8 +1,10 @@
+
 header
 {
 	display: flex;
 	justify-content: center;
 	align-content: center;
+	width: 100%;
 }
 
 h1
@@ -22,18 +24,50 @@ h1
 	padding:10px;
 }
 
-#buttonNewGame
-{
 
+
+.setupElement
+{
+	height: 20px;
+	margin: 20px;
+	align-self: center;
+	transition-property: color, filter;
+	transition-duration: .4s;
+	transition-timing-function: ease-out;}
+
+.setupElement:hover
+{
+	color: red;
+	filter: drop-shadow(10px 10px 10px  black );
 }
 
-#select
+#chrono
 {
-	
+	display: flex;
+	justify-content: center;
+	align-content: center;
 }
 
 #chrono p
 {
 	font-size: 16px;
 	font-weight: 500;
+	align-self: center;
 }
+
+
+
+
+#game
+{
+	padding: 20px;
+	background: lightgrey;
+}
+
+
+
+
+
+
+
+
