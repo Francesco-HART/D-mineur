@@ -15,7 +15,10 @@ chrono = "00"
 
 
 function newGame(){
-	gameOver();
+	while(container.hasChildNodes()){
+		container.removeChild(container.firstChild);
+	}	
+
 	if (select.value==9) {
 		nbBombes=10
 	}
@@ -107,13 +110,20 @@ function makeGrid(dim) {
 			cell.id = i+"|"+j
 			cell.className = "safe"
 			cell.value=0
-			cell.style='width:20px; height:20px;'
+			cell.style='background-image:url("/Users/Gwenael/Documents/javascript janvier/D-mineur/assets/sprite/normal.png");width:20px; height:20px;'
 			containerRow.appendChild(cell)
-			//cell.onclick=getValue
+
+			cell.addEventListener('click', function(){
+			getValue(this);
+			}, 'once');
+			cell.oncontextmenu=function(event){
+				cell.style='background-image:url("/Users/Gwenael/Documents/javascript janvier/D-mineur/assets/sprite/flag.png");width:20px; height:20px;'
+			}
 
 			tableRow.push(0)
 		}
 		container.appendChild(containerRow)
+		container.style='background:white;'
 		tableGrid.push(tableRow)
 	};
 	console.log(tableGrid)
@@ -128,10 +138,9 @@ function makeBomb (nbBomb) {
 
 		if(tableGrid[randomRow][randomColumn]!==9){
 			document.getElementById(randomRow + "|" + randomColumn).className = "bomb"
+			document.getElementById(randomRow + "|" + randomColumn).value = 9 
 
-			//document.getElementById(randomRow + "|" + randomColumn).style = 'background-image:url()'
-
-			document.getElementById(randomRow + "|" + randomColumn).style="width:20px; height:20px;"
+			document.getElementById(randomRow + "|" + randomColumn).style="background-image:url('/Users/Gwenael/Documents/javascript janvier/D-mineur/assets/sprite/normal.png');width:20px; height:20px;"
 			tableGrid[randomRow][randomColumn]=9
 
 			for(var row=-1; row<=1; row++){
@@ -146,7 +155,7 @@ function makeBomb (nbBomb) {
 				}	
 			}
 
-			console.log("bomb")
+			//console.log("bomb")
 			}
 		else{
 		i--
@@ -156,11 +165,22 @@ function makeBomb (nbBomb) {
 
 
 function gameOver(){
-	while(container.hasChildNodes()){
-		container.removeChild(container.firstChild);
+
+	//document.getElementsByClassName('bomb').style='background-image:url("/Users/Gwenael/Documents/javascript janvier/D-mineur/assets/sprite/mine.png");width:20px; height:20px;'
+	var bombCell = document.getElementsByClassName('bomb')
+	for(var i=0; i<bombCell.length; i++){
+		bombCell[i].style='background-image:url("/Users/Gwenael/Documents/javascript janvier/D-mineur/assets/sprite/mine.png");width:20px; height:20px;'
 	}
 }
 
+
+function getValue(cell){
+	console.log(cell)
+	if(cell.className==='bomb'){
+		//cell.style='background-image:url("/Users/Gwenael/Documents/javascript janvier/D-mineur/assets/sprite/mine.png");width:20px; height:20px;'
+		gameOver()
+	}
+}
 
 
 
