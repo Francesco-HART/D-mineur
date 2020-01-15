@@ -28,3 +28,4 @@ function newGame(){
 	}
 	console.log(nbBombes);
 }	
+
