@@ -1,4 +1,3 @@
-
 header
 {
 	display: flex;
@@ -33,7 +32,9 @@ h1
 	align-self: center;
 	transition-property: color, filter;
 	transition-duration: .4s;
-	transition-timing-function: ease-out;}
+	transition-timing-function: ease-out;
+
+}
 
 .setupElement:hover
 {
@@ -55,15 +56,38 @@ h1
 	align-self: center;
 }
 
-
+:root {
+	--grid-cols: 1;
+	--grid-rows: 1;
+}
 
 
 #game
 {
 	padding: 20px;
 	background: lightgrey;
+	display: flex;
+	justify-content: center;
+}
+/*
+#container {
+	display: grid;
+	grid-gap: 1em;
+	grid-template-rows: repeat(var(--grid-rows), 0fr);
+	grid-template-columns: repeat(var(--grid-cols), 0fr);
+}*/
+#container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-content: center;
 }
 
+.grid-item {
+	padding: 1em;
+	border: 1px solid #ddd;
+	text-align: center;
+}
 
 
 
