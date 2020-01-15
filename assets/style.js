@@ -10,6 +10,7 @@ date = 0;
 date2 = 0;
 dateStop = 0;
 chrono = "00"
+test = 0
 
 
 
@@ -93,81 +94,66 @@ function resetChrono()
 function makeGrid(dim) {
 	container.style.setProperty('--grid-dim', dim);
 	container.style.setProperty('--grid-dim', dim);
-
 	tableGrid =[]
 	for (let i = 0; i < (dim ); i++) {
 		containerRow = document.createElement('div')
 		containerRow.id =''+i
-		containerRow.style='display:flex;justify-content:center;align-content:center;'
-
 		tableRow=[]
 		for (let j = 0; j < (dim); j++) {
 			let cell = document.createElement("button");
-
-			containerRow.appendChild(cell)
 			cell.id = i+"|"+j
-			cell.className = "safe"
-			cell.style='background:red;width:20px; height:20px;'
+			cell.className = "hidden"
+			cell.setAttribute("onclick", "onDiscovered("+ i + "," + j + ")")
 			containerRow.appendChild(cell)
-
 			tableRow.push(0)
 		}
 		container.appendChild(containerRow)
 		tableGrid.push(tableRow)
 	};
 	console.log(tableGrid)
-
+	lgCol = tableGrid.length
+	lgRow = tableRow.length
 };
 
 
+
 function makeBomb (nbBomb) {
-	for(i = 0; i < nbBomb; i++) {
+
+	for (let i = 0; i < nbBomb; i++) {
 		randomRow = Math.floor(Math.random() * tableRow.length)
-		randomColumn = Math.floor(Math.random() * tableGrid.length )
-
-		if(tableGrid[randomRow][randomColumn]===0){
-			document.getElementById(randomRow + "|" + randomColumn).className = "bomb"
-			document.getElementById(randomRow + "|" + randomColumn).style='background:green;'
-			tableGrid[randomRow][randomColumn]=9
-
-
-			if(randomRow-1>=0 && randomColumn-1>=0)
-			{
-				tableGrid[randomRow-1][randomColumn-1]+=1;
-			}
-			if (randomRow-1>=0 && randomColumn>=0) {
-				tableGrid[randomRow-1][randomColumn]+=1;
-			}
-			if (randomRow-1>=0 && randomColumn+1<=tableGrid.length-1) {
-				tableGrid[randomRow-1][randomColumn+1]+=1;
-			}
-
-			if (randomColumn-1>=0) {
-				tableGrid[randomRow][randomColumn-1]+=1;
-			}
-			
-		 	if (randomColumn+1<=tableGrid.length-1) {
-				tableGrid[randomRow][randomColumn+1]+=1;
-			}
-
-			if (randomRow+1<=tableGrid.length-1&& randomColumn-1>=0) {
-				tableGrid[randomRow+1][randomColumn-1]+=1;
-			}
-			if (randomRow+1<=tableGrid.length-1 && randomColumn>=0) {
-				tableGrid[randomRow+1][randomColumn]+=1;
-			}
-			if (randomRow+1<=tableGrid.length-1 && randomColumn+1<=tableGrid.length-1) {
-				tableGrid[randomRow+1][randomColumn+1]+=1;
-			}
-
-
-			console.log("bomb")
-			}
-			else{
+		randomColumn = Math.floor(Math.random() * tableGrid.length)
+		if (tableGrid[randomRow][randomColumn] === 0) {
+			tableGrid[randomRow][randomColumn] = 9
+			numCase(randomRow,randomColumn)
+		} else {
 			i--
-			}
-
 		}
+	}
+}
+
+function onDiscovered(row, col) {
+	if (tableGrid[row][col] !== 9) {
+		document.getElementById(row + "|" + col).className = "b"+ tableGrid[row][col]
+	} else if (tableGrid[row][col] === 9) {
+		document.getElementById(row + "|" + col).className = "b"+ tableGrid[row][col]
+		stopChrono()
+	}
 
 }
 
+function numCase (row, col) {
+	for (let c = -1; c <= 1; c++) {
+		if ((col === 0 && c === -1) || (col === lgCol - 1 && c === +1)) {
+			continue
+		}
+		for (let r = -1; r <= 1; r++) {
+			if ((row === 0 && r === -1) || (row === lgRow - 1 && r === +1)) {
+				continue
+			}
+			if (tableGrid[row + r][col + c] !== 9) {
+				tableGrid[row + r][col + c] += 1
+				console.log('test')
+			}
+		}
+	}
+}
