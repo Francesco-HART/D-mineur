@@ -130,43 +130,36 @@ function makeBomb (nbBomb) {
 			document.getElementById(randomRow + "|" + randomColumn).style='background:green;'
 			tableGrid[randomRow][randomColumn]=9
 
-			for(var c=-1; c<=1; c++) {
-				for (var j = -1; j <= 1; j++) {
-					console.log(c + "  " + j   +  " coordonné: " + randomRow + " , " + randomColumn)
 
-					/*
-					if((randomColumn!==0 && randomRow!==0) && (randomColumn!==tableRow.length-1 && randomRow!==tableRow.length-1) && (c!==0 || j!==0)){
-						tableGrid[randomRow+c][randomColumn+j]+=1;
-					}
-
-					if ((randomRow === 0 && randomColumn !== 0) && (c!==0 || j!==0) ){
-						tableGrid[randomRow][randomColumn+j]+=1;
-					}*/
-					if(c!==0 || j!==0){
-						if(tableGrid[randomRow+c][randomColumn+j]!==9){
-							if (randomColumn!=0 || randomColumn!=tableGrid.length){
-								tableGrid[randomRow+c][randomColumn]+=1;
-							}
-							else if (randomRow!=0 || randomRow!=tableGrid.length){
-								tableGrid[randomRow][randomColumn+j]+=1;
-							}
-						}
-
-					}
-
-
-
-					/*
-					if((c!==0 || j!==0) && tableGrid[randomRow][randomColumn]===9){
-						tableGrid[randomRow+c][randomColumn+j]+=1;
-					}
-					/*
-					if ((randomColumn!==0 && randomRow!==0) && (randomColumn!==tableRow.length-1 && randomRow!==tableRow.length-1) && ){
-
-					}*/
-
-				}
+			if(randomRow-1>=0 && randomColumn-1>=0)
+			{
+				tableGrid[randomRow-1][randomColumn-1]+=1;
 			}
+			if (randomRow-1>=0 && randomColumn>=0) {
+				tableGrid[randomRow-1][randomColumn]+=1;
+			}
+			if (randomRow-1>=0 && randomColumn+1<=tableGrid.length-1) {
+				tableGrid[randomRow-1][randomColumn+1]+=1;
+			}
+
+			if (randomColumn-1>=0) {
+				tableGrid[randomRow][randomColumn-1]+=1;
+			}
+			
+		 	if (randomColumn+1<=tableGrid.length-1) {
+				tableGrid[randomRow][randomColumn+1]+=1;
+			}
+
+			if (randomRow+1<=tableGrid.length-1&& randomColumn-1>=0) {
+				tableGrid[randomRow+1][randomColumn-1]+=1;
+			}
+			if (randomRow+1<=tableGrid.length-1 && randomColumn>=0) {
+				tableGrid[randomRow+1][randomColumn]+=1;
+			}
+			if (randomRow+1<=tableGrid.length-1 && randomColumn+1<=tableGrid.length-1) {
+				tableGrid[randomRow+1][randomColumn+1]+=1;
+			}
+
 
 			console.log("bomb")
 			}
