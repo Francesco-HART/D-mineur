@@ -3,6 +3,7 @@ var new_p = document.createElement('p');
 new_p.textContent = "coizecozico";
 b.prepend(new_p);*/
 
+const container = document.getElementById("container");
 select = document.getElementById('select');
 gameSection = document.getElementById('game');
 date = 0;
@@ -30,6 +31,8 @@ function newGame(){
 	console.log(nbBombes);
 
 	startChrono()
+	makeGrid(select.value);
+	makeBomb(nbBombes);
 }
 
 
@@ -86,3 +89,29 @@ function resetChrono()
 	}
 }
 
+
+function makeGrid(dim) {
+	container.style.setProperty('--grid-dim', dim);
+	container.style.setProperty('--grid-dim', dim);
+	for (i = 0; i < (dim * dim); i++) {
+		let cell = document.createElement("div");
+		setTimeout(2)
+		cell.id = ""+i
+		cell.className = "safe"
+		container.appendChild(cell)
+	};
+};
+
+
+function makeBomb (nbBomb) {
+	for(i = 0; i < nbBomb; i++) {
+		placeBomb = Math.floor(Math.random() * (Math.pow(select.value, 2)))
+		if (document.getElementById(placeBomb).className === "bomb") {
+			i--
+		} else	{
+			document.getElementById(placeBomb).className = "bomb"
+			console.log("bomb")
+		}
+	}
+
+}
