@@ -15,7 +15,6 @@ chrono = "00"
 
 
 function newGame(){
-	console.log(select.value)
 	if (select.value==9) {
 		nbBombes=10
 	}
@@ -28,7 +27,6 @@ function newGame(){
 	else if(select.value==30){
 		nbBombes=250
 	}
-	console.log(nbBombes);
 
 	startChrono()
 	makeGrid(select.value);
@@ -110,6 +108,7 @@ function makeGrid(dim) {
 			cell.value=0
 			cell.style='background:red;width:20px; height:20px;'
 			containerRow.appendChild(cell)
+			//cell.onclick=getValue
 
 			tableRow.push(0)
 		}
@@ -126,7 +125,7 @@ function makeBomb (nbBomb) {
 		randomRow = Math.floor(Math.random() * tableRow.length)
 		randomColumn = Math.floor(Math.random() * tableGrid.length )
 
-		if(tableGrid[randomRow][randomColumn]===0){
+		if(tableGrid[randomRow][randomColumn]!==9){
 			document.getElementById(randomRow + "|" + randomColumn).className = "bomb"
 			document.getElementById(randomRow + "|" + randomColumn).style='background:green;'
 			tableGrid[randomRow][randomColumn]=9
@@ -182,9 +181,10 @@ function makeBomb (nbBomb) {
 			}
 			*/
 
+
 			for(var row=-1; row<=1; row++){
 				for( var col=-1; col<=1; col++){
-					if(((randomRow+row>=0  && randomRow+row<=tableGrid.length-1) && (randomColumn+col>=0 && randomColumn+col<=tableGrid.length-1)) && (row!==0 || col!==0))
+					if(((randomRow+row>=0  && randomRow+row<=tableGrid.length-1) && (randomColumn+col>=0 && randomColumn+col<=tableGrid.length-1)) && (row!==0 || col!==0) && tableGrid[randomRow+row][randomColumn+col]!==9)
 					{
 						tableGrid[randomRow+row][randomColumn+col]+=1;
 						document.getElementById((randomRow+row) + "|" + (randomColumn+col)).value ++; 
@@ -199,8 +199,6 @@ function makeBomb (nbBomb) {
 			else{
 			i--
 			}
-
 		}
-
 }
 
