@@ -15,6 +15,7 @@ chrono = "00"
 
 
 function newGame(){
+	gameOver();
 	if (select.value==9) {
 		nbBombes=10
 	}
@@ -96,7 +97,7 @@ function makeGrid(dim) {
 	for (let i = 0; i < (dim ); i++) {
 		containerRow = document.createElement('div')
 		containerRow.id =''+i
-		containerRow.style='display:flex;justify-content:center;align-content:center;'
+		containerRow.style='display:flex;justify-content:center;align-content:center;padding:0px;'
 
 		tableRow=[]
 		for (let j = 0; j < (dim); j++) {
@@ -106,7 +107,7 @@ function makeGrid(dim) {
 			cell.id = i+"|"+j
 			cell.className = "safe"
 			cell.value=0
-			cell.style='background:red;width:20px; height:20px;'
+			cell.style='width:20px; height:20px;'
 			containerRow.appendChild(cell)
 			//cell.onclick=getValue
 
@@ -127,60 +128,11 @@ function makeBomb (nbBomb) {
 
 		if(tableGrid[randomRow][randomColumn]!==9){
 			document.getElementById(randomRow + "|" + randomColumn).className = "bomb"
-			document.getElementById(randomRow + "|" + randomColumn).style='background:green;'
+
+			//document.getElementById(randomRow + "|" + randomColumn).style = 'background-image:url()'
+
+			document.getElementById(randomRow + "|" + randomColumn).style="width:20px; height:20px;"
 			tableGrid[randomRow][randomColumn]=9
-
-/*
-			if(randomRow-1>=0 && randomColumn-1>=0)
-			{
-				tableGrid[randomRow-1][randomColumn-1]+=1;
-			}
-			if (randomRow-1>=0 && randomColumn>=0) {
-				tableGrid[randomRow-1][randomColumn]+=1;
-			}
-			if (randomRow-1>=0 && randomColumn+1<=tableGrid.length-1) {
-				tableGrid[randomRow-1][randomColumn+1]+=1;
-			}
-
-			if (randomColumn-1>=0) {
-				tableGrid[randomRow][randomColumn-1]+=1;
-			}
-			
-		 	if (randomColumn+1<=tableGrid.length-1) {
-				tableGrid[randomRow][randomColumn+1]+=1;
-			}
-
-			if (randomRow+1<=tableGrid.length-1&& randomColumn-1>=0) {
-				tableGrid[randomRow+1][randomColumn-1]+=1;
-			}
-			if (randomRow+1<=tableGrid.length-1 && randomColumn>=0) {
-				tableGrid[randomRow+1][randomColumn]+=1;
-			}
-			if (randomRow+1<=tableGrid.length-1 && randomColumn+1<=tableGrid.length-1) {
-				tableGrid[randomRow+1][randomColumn+1]+=1;
-			}*/
-
-			/*
-			for(var row=-1; row<=1; row++){
-				for(var col=-1; col<=1; col++){
-					if(randomRow-row>=0 && randomColumn-col>=0)
-					{
-						tableGrid[randomRow-row][randomColumn-col]+=1;
-					}
-					if (randomRow-row>=0 && randomColumn>=0) {
-						tableGrid[randomRow-row][randomColumn]+=1;
-					}
-					if (randomRow+row>=0 && randomColumn+col<=tableGrid.length-1) {
-						tableGrid[randomRow+row][randomColumn+col]+=1;
-					}
-					if(row==0 && col==0){
-						tableGrid[randomRow][randomColumn]-=1;
-					}
-
-				}
-			}
-			*/
-
 
 			for(var row=-1; row<=1; row++){
 				for( var col=-1; col<=1; col++){
@@ -188,17 +140,35 @@ function makeBomb (nbBomb) {
 					{
 						tableGrid[randomRow+row][randomColumn+col]+=1;
 						document.getElementById((randomRow+row) + "|" + (randomColumn+col)).value ++; 
+						
 						//console.log(document.getElementById((randomRow+row) + "|" + (randomColumn+col))) 
 					}
 				}	
 			}
 
-
 			console.log("bomb")
 			}
-			else{
-			i--
-			}
+		else{
+		i--
 		}
+	}
 }
+
+
+function gameOver(){
+	while(container.hasChildNodes()){
+		container.removeChild(container.firstChild);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
 
