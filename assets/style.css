@@ -37,3 +37,21 @@ h1
 	font-size: 16px;
 	font-weight: 500;
 }
+
+:root {
+	--grid-cols: 1;
+	--grid-rows: 1;
+}
+
+#container {
+	display: grid;
+	grid-gap: 1em;
+	grid-template-rows: repeat(var(--grid-rows), 0fr);
+	grid-template-columns: repeat(var(--grid-cols), 0fr);
+}
+
+.grid-item {
+	padding: 1em;
+	border: 1px solid #ddd;
+	text-align: center;
+}

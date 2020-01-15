@@ -3,6 +3,8 @@
 	<head>
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="assets/style.css" />
+		<script  src="./assets/grid.js" ></script>
+
 		<title>Démineur</title>
 	</head>
 
@@ -29,12 +31,32 @@
 				</p>
 			</div>
 		</section>
-
-
 		<section id="game">
-			
-		</section>
+			<div id="container">
+				<script>
+					const container = document.getElementById("container");
 
+					function makeRows(rows, cols) {
+						container.style.setProperty('--grid-rows', rows);
+						container.style.setProperty('--grid-cols', cols);
+						for (c = 0; c < (rows * cols); c++) {
+							let cell = document.createElement("div");
+							if (c%3 == 0){
+								cell.innerText = (0);
+							}
+							else {
+								cell.innerText = (1);
+							}
+							setTimeout(2)
+
+							container.appendChild(cell).className = "grid-item";
+						};
+					};
+
+					makeRows(30, 30);
+				</script>
+			</div>
+		</section>
 
 		<script type="text/javascript" src="assets/style.js">
 		</script>
