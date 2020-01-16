@@ -97,6 +97,7 @@ function makeGrid(dim) {
 	for (let i = 0; i < (dim ); i++) {
 		containerRow = document.createElement('div')
 		containerRow.id =''+i
+		containerRow.className='containerRow'
 
 		tableRow=[]
 		for (let j = 0; j < (dim); j++) {
@@ -116,12 +117,15 @@ function makeGrid(dim) {
 			}*/
 			cell.oncontextmenu=function(event){
 
-				if(cell.className ==="hidden"){
+				if(cell.className ==="hidden" && remainingBomb>0){
 					cell.className = "flag"
+					remainingBomb--
 				}
-				else if ( cell.className === "flag" ) {
+				else if ( cell.className === "flag") {
 					cell.className = "hidden"
+					remainingBomb++
 				}
+				document.getElementById('nbBomb').textContent='bombe: ' + (remainingBomb)
 
 				getValue(this)
 			}
@@ -137,6 +141,9 @@ function makeGrid(dim) {
 
 
 function makeBomb (nbBomb) {
+	remainingBomb = nbBomb;
+	document.getElementById('nbBomb').textContent='bombe: ' + (nbBomb)
+
 	for(i = 0; i < nbBomb; i++) {
 		randomRow = Math.floor(Math.random() * tableRow.length)
 		randomColumn = Math.floor(Math.random() * tableGrid.length )
@@ -154,6 +161,11 @@ function makeBomb (nbBomb) {
 
 function onDiscovered(row, col) {
 	console.log('test')
+	if ( document.getElementById(row + "|" + col).className === "flag") {
+		remainingBomb++
+		document.getElementById('nbBomb').textContent='bombe: ' + (remainingBomb)
+
+	}
 	if (tableGrid[row][col] !== BOMB_VALUE) {
 
 		document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
@@ -161,6 +173,7 @@ function onDiscovered(row, col) {
 		gameOver()
 		stopChrono()
 	}
+	
 }
 
 function eraseGrid(){
