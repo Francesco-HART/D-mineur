@@ -111,7 +111,6 @@ function makeGrid(dim) {
 			containerRow.appendChild(cell)
 			cell.id = i+"|"+j
 			cell.className = "hidden"
-			cell.name='cell'
 			cell.setAttribute("onclick", "onDiscovered("+ i + "," + j + ")")
 			containerRow.appendChild(cell)
 
@@ -162,7 +161,6 @@ function makeBomb (nbBomb) {
 
 		if(tableGrid[randomRow][randomColumn]!==BOMB_VALUE){
 			document.getElementById(randomRow + "|" + randomColumn).style="hidden"
-			document.getElementById(randomRow + "|" + randomColumn).name="bomb"
 
 			tableGrid[randomRow][randomColumn]= BOMB_VALUE
 
@@ -187,7 +185,6 @@ function onDiscovered(row, col) {
 
 
 		document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
-		document.getElementById(row + "|" + col).name = "caseRevealed"
 
 		if(tableGrid[row][col] === 0){
 		//cell.className = "state-0";
@@ -199,6 +196,7 @@ function onDiscovered(row, col) {
 
 	win()
 
+	NB_CLICK++
 	document.getElementById(row + "|" + col).disabled=true
 	return false
 	
@@ -240,9 +238,7 @@ function gameOver(){
 
 
 function win(){
-	var caseRevealed = document.getElementsByName('caseRevealed')
-	//console.log(remainingBomb + " + " + NB_FLAG + " + " + caseRevealed.length + " = " +(remainingBomb+NB_FLAG+caseRevealed.length) + '   verif: ' + (tableGrid.length*tableGrid.length))
-	if (remainingBomb+NB_FLAG+caseRevealed.length===tableGrid.length*tableGrid.length) {
+	if (remainingBomb+NB_FLAG+NB_CLICK===tableGrid.length*tableGrid.length) {
 		gameOver()
 		gameInfo.textContent='Bravo, vous avez gagné'
 	}
