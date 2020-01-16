@@ -6,10 +6,12 @@ b.prepend(new_p);*/
 const container = document.getElementById("container");
 select = document.getElementById('select');
 gameSection = document.getElementById('game');
+gameInfo=document.getElementById('gameInfo');
 date = 0;
 date2 = 0;
 dateStop = 0;
-chrono = "00"
+chrono = "00";
+nbBomb = 0;
 
 const BOMB_VALUE = 9
 const DEFAULTCELL_VALUE = 0
@@ -24,6 +26,7 @@ const BOARD_CONFIGS = [
 function newGame(){
 	eraseGrid()
 	resetChrono()
+	NB_FLAG=0
 
 	for (let ruleIndex = 0; ruleIndex < BOARD_CONFIGS.length; ruleIndex++) {
 		const rule = BOARD_CONFIGS[ruleIndex]
@@ -31,7 +34,7 @@ function newGame(){
 			makeGrid(rule.size);
 			makeBomb(rule.bombs);
 			startChrono()
-
+			nbBomb = rule.bombs
 			return;
 		}
 	}
@@ -97,6 +100,7 @@ function makeGrid(dim) {
 	for (let i = 0; i < (dim ); i++) {
 		containerRow = document.createElement('div')
 		containerRow.id =''+i
+		containerRow.className='containerRow'
 
 		tableRow=[]
 		for (let j = 0; j < (dim); j++) {
@@ -105,7 +109,7 @@ function makeGrid(dim) {
 			containerRow.appendChild(cell)
 			cell.id = i+"|"+j
 			cell.className = "hidden"
-			cell.setAttribute("onclick", "onDiscovered("+ i + "," + j + ")")
+			cell.setAttribute("onclick", "onResolve("+ i + "," + j + ")")
 			containerRow.appendChild(cell)
 
 			/*cell.addEventListener('click', function(){
@@ -116,12 +120,21 @@ function makeGrid(dim) {
 			}*/
 			cell.oncontextmenu=function(event){
 
-				if(cell.className ==="hidden"){
+				if(cell.className ==="hidden" && remainingBomb>0){
 					cell.className = "flag"
+					cell.onclick=''
+					remainingBomb--
+					NB_FLAG++
 				}
 				else if ( cell.className === "flag" ) {
 					cell.className = "hidden"
+					cell.onclick=function(event){
+						discovered(cell.id[0], cell.id[2])
+					}
+					remainingBomb++
+					NB_FLAG--
 				}
+				gameInfo.textContent='bombe: ' + (remainingBomb)
 
 				getValue(this)
 			}
@@ -137,6 +150,9 @@ function makeGrid(dim) {
 
 
 function makeBomb (nbBomb) {
+	remainingBomb = nbBomb;
+	gameInfo.textContent='bombe: ' + (nbBomb)
+
 	for(i = 0; i < nbBomb; i++) {
 		randomRow = Math.floor(Math.random() * tableRow.length)
 		randomColumn = Math.floor(Math.random() * tableGrid.length )
@@ -152,15 +168,58 @@ function makeBomb (nbBomb) {
 	}
 }
 
-function onDiscovered(row, col) {
-	console.log('test')
-	if (tableGrid[row][col] !== BOMB_VALUE) {
+function onResolve(i, j){
+	discovered(i, j)
+	document.getElementById(i + "|" + j).disabled=true
+	win()
+}
 
+function discovered(row, col) {
+	if ( document.getElementById(row + "|" + col).className === "flag") {
+		gameInfo.textContent='bombe: ' + (remainingBomb)
+		return false
+	}
+
+	if ( tableGrid [row][col] === 0 && document.getElementById(row + "|" + col).className === "hidden") {
+		if (row - 1>= 0 && col - 1 >= 0 && tableGrid [row-1][col-1] !== 9 && (tableGrid [row-1][col-1] !== undefined)){
+			document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
+			discovered( row-1, col-1)
+		}
+		if ( col-1 >= 0 && tableGrid [row][col-1] !== 9 && (tableGrid [row][col-1] !== undefined)){
+			document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
+			discovered( row, col-1)
+		}
+		if ( row < tableGrid.length -1  && col -1 >= 0 && tableGrid [row+1][col-1] !==9 && (tableGrid [row+1][col-1] !== undefined)){
+			document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
+			discovered( row+1, col-1)
+		}
+		if ( row -1 >= 0 && tableGrid [row-1][col] !==9 && (tableGrid [row-1][col] !== undefined)){
+			document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
+			discovered( row-1, col)
+		}
+		if (row < tableGrid.length - 1 && tableGrid [row+1][col] !==9 && (tableGrid [row+1][col] !== undefined)){
+			document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
+			discovered( row+1, col)
+		}
+		if (row-1 >= 0 && col+1 < tableGrid.length && tableGrid [row-1][col+1] !==9 && (tableGrid [row-1][col+1] !== undefined)){
+			document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
+			discovered( row-1, col+1)
+		}
+		if (col+1 < tableGrid.length  && tableGrid [row][col+1] !==9 && (tableGrid [row][col+1] !== undefined)){
+			document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
+			discovered( row, col+1)
+		}
+		if ( row+1 < tableGrid.length - 1 && col +1 < tableGrid.length  && tableGrid [row+1][col+1] !==9 && (tableGrid [row+1][col+1] !== undefined)){
+			document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
+			discovered( row+1, col+1)
+		}
+	} else if (tableGrid[row][col] !== 9) {
 		document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
 	} else if (tableGrid[row][col] === BOMB_VALUE) {
 		gameOver()
-		stopChrono()
+		alert("VOUS AVEZ PERDU")
 	}
+
 }
 
 function eraseGrid(){
@@ -191,9 +250,28 @@ function gameOver(){
 			allValues.disabled = true
 		}
 	}
+	gameInfo.textContent='Vous avez perdu'
+
+	stopChrono()
+
 }
+
+
+
+function win(){
+
+	if (document.getElementsByClassName("hidden").length === nbBomb) {
+		gameOver()
+		gameInfo.textContent='Bravo, vous avez gagné'
+		alert("VOUS AVEZ GAGNE")
+
+	}
+
+}
+
+
+
 function getValue(cell){
-	console.log(cell)
 	if(cell.className==='bomb'){
 		gameOver()
 	}
