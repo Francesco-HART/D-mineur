@@ -174,12 +174,16 @@ function onResolve(i, j){
 }
 
 function discovered(row, col) {
-		document.getElementById(row + "|" + col).disabled=true
 
 	if ( document.getElementById(row + "|" + col).className === "flag") {
 		gameInfo.textContent='bombe: ' + (remainingBomb)
 		return false
 	}
+	else{
+				document.getElementById(row + "|" + col).disabled=true
+
+	}
+
 
 	if ( tableGrid [row][col] === 0 && document.getElementById(row + "|" + col).className === "hidden") {
 
