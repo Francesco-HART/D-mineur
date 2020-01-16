@@ -125,11 +125,15 @@ function makeGrid(dim) {
 
 				if(cell.className ==="hidden" && remainingBomb>0){
 					cell.className = "flag"
+					cell.onclick=''
 					remainingBomb--
 					NB_FLAG++
 				}
 				else if ( cell.className === "flag") {
 					cell.className = "hidden"
+					cell.onclick=function(event){
+						onDiscovered(cell.id[0], cell.id[2])
+					}
 					remainingBomb++
 					NB_FLAG--
 				}
@@ -195,9 +199,13 @@ function onDiscovered(row, col) {
 
 	win()
 
+	document.getElementById(row + "|" + col).disabled=true
 	return false
 	
 }
+
+
+
 
 function eraseGrid(){
 	while(container.hasChildNodes()){
