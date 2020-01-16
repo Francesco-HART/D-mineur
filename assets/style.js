@@ -293,7 +293,14 @@ function loose() {
 		{
 			src="./assets/image/game-over.gif"
 		}
-	},1700)
+	},1800)
+	setTimeout(function () {
+		with(document.getElementById("sound-loose"))
+		{
+			src="https://www.wiizelda.net/mp3/loz/Game%20Over.mp3"
+			autoplay=true
+		}
+	},3000)
 }
 
 
