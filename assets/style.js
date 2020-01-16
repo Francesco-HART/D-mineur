@@ -200,7 +200,10 @@ function discovered(row, col) {
 		document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
 	} else if (tableGrid[row][col] === BOMB_VALUE) {
 		gameOver()
+		gameInfo.textContent='Vous avez perdu'
 		alert("VOUS AVEZ PERDU")
+		document.getElementById(row + "|" + col).id = "loose"
+
 	}
 
 }
@@ -233,10 +236,7 @@ function gameOver(){
 			allValues.disabled = true
 		}
 	}
-	gameInfo.textContent='Vous avez perdu'
-
 	stopChrono()
-
 }
 
 
