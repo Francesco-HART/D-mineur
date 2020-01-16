@@ -106,6 +106,7 @@ h1
 	height: 20px;
 	width: 20px;
 	background-repeat: no-repeat;
+	outline-style: none;
 }
 
 .flag{
@@ -114,7 +115,9 @@ h1
 	height: 20px;
 	width: 20px;
 	background-repeat: no-repeat;
+	outline-style: none;
 }
+
 
 .b0{
 	background-image: url("../assets/image/empty.png");

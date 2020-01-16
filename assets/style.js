@@ -241,7 +241,7 @@ function gameOver(){
 
 function win(){
 	var caseRevealed = document.getElementsByName('caseRevealed')
-	console.log(remainingBomb + " + " + NB_FLAG + " + " + caseRevealed.length + " = " +(remainingBomb+NB_FLAG+caseRevealed.length) + '   verif: ' + (tableGrid.length*tableGrid.length))
+	//console.log(remainingBomb + " + " + NB_FLAG + " + " + caseRevealed.length + " = " +(remainingBomb+NB_FLAG+caseRevealed.length) + '   verif: ' + (tableGrid.length*tableGrid.length))
 	if (remainingBomb+NB_FLAG+caseRevealed.length===tableGrid.length*tableGrid.length) {
 		gameOver()
 		gameInfo.textContent='Bravo, vous avez gagné'
