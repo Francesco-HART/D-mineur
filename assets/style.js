@@ -114,6 +114,9 @@ function makeGrid(dim) {
 			cell.onclick=function(event){
 				getValue(this)
 			}*/
+
+
+
 			cell.oncontextmenu=function(event){
 
 				if(cell.className ==="hidden"){
@@ -153,14 +156,99 @@ function makeBomb (nbBomb) {
 }
 
 function onDiscovered(row, col) {
-	console.log('test')
-	if (tableGrid[row][col] !== 9) {
+	/*var colr = col;
+	var rowr = row;
+	var coll = col;
+	var rowl = row;
+	var colu = col;
+	var rowu = row;
+	var cold = col;
+	var rowd = row;
 
+	for ( let i = 0; i< (tableGrid.length - row) ; i++) {
+		while (tableGrid[rowr][colr] == 0 && colr < tableGrid.length && rowr < tableGrid.length) {
+			console.log('test 1')
+			document.getElementById(rowr + "|" + colr).className = "b" + tableGrid[rowr][colr++]
+			if (tableGrid[rowr][colr] != 0 && tableGrid[rowr][colr] != 9 && colr < tableGrid.length && rowr < tableGrid.length)
+				document.getElementById(rowr + "|" + colr).className = "b" + tableGrid[rowr][colr++]
+		}
+		while (tableGrid[rowl][coll] == 0 && coll >= 0 && rowl >= 0) {
+			document.getElementById(rowl + "|" + coll).className = "b" + tableGrid[rowl][coll--]
+			if (tableGrid[rowl][coll + 1] > 0 && tableGrid[rowr][colr] != 9)
+				document.getElementById(rowl + "|" + coll).className = "b" + tableGrid[rowl][coll--]
+
+		}
+		while (tableGrid[rowu][colu] == 0 && rowu > 0) {
+			document.getElementById(rowu + "|" + colu).className = "b" + tableGrid[rowu--][colu]
+			if (tableGrid[rowu + 1][colu] > 0 && tableGrid[rowu][colu] != 9 && rowu > 0)
+				document.getElementById(rowu + "|" + colu).className = "b" + tableGrid[rowu--][colu]
+
+		}
+		while (tableGrid[rowd][cold] == 0 && rowd < tableGrid.length) {
+			document.getElementById(rowd + "|" + cold).className = "b" + tableGrid[rowd++][cold]
+			if (tableGrid[rowd - 1][cold] > 0 && tableGrid[rowd][cold] != 9 && rowd < tableGrid.length)
+				document.getElementById(rowd + "|" + cold).className = "b" + tableGrid[rowd++][cold]
+
+		}
+
+	}*/
+
+	if ( tableGrid [row][col] === 0 && document.getElementById(row + "|" + col).className === "hidden") {
+		if (row - 1>= 0 && col - 1 >= 0 && tableGrid [row-1][col-1] !== 9 && (tableGrid [row-1][col-1] !== undefined)){
+			console.log(1)
+			console.log(row-1,col-1)
+			document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
+			onDiscovered( row-1, col-1)
+		}
+		if ( col-1 >= 0 && tableGrid [row][col-1] !== 9 && (tableGrid [row][col-1] !== undefined)){
+			console.log(2)
+			console.log(row,col-1)
+			document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
+			onDiscovered( row, col-1)
+		}
+		if ( row < tableGrid.length-1 && col -1 >= 0 && tableGrid [row+1][col-1] !==9 && (tableGrid [row+1][col-1] !== undefined)){
+			console.log(3)
+			console.log(row+1,col-1)
+			document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
+			onDiscovered( row+1, col-1)
+		}
+		if ( row -1 >= 0 && tableGrid [row-1][col] !==9 && (tableGrid [row-1][col] !== undefined)){
+			console.log(4)
+			console.log(row-1,col)
+			document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
+			onDiscovered( row-1, col)
+		}
+		if (row < tableGrid.length-1 && tableGrid [row+1][col] !==9 && (tableGrid [row+1][col] !== undefined)){
+			console.log(5)
+			console.log(row+1,col)
+			document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
+			onDiscovered( row+1, col)
+		}
+		if (row-1 >= 0 && col+1 < tableGrid.length-1 && tableGrid [row-1][col+1] !==9 && (tableGrid [row-1][col+1] !== undefined)){
+			console.log(6)
+			console.log(row-1,col+1)
+			document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
+			onDiscovered( row-1, col+1)
+		}
+		if (col+1 < tableGrid.length-1 && tableGrid [row][col+1] !==9 && (tableGrid [row][col+1] !== undefined)){
+			console.log(7)
+			console.log(row,col+1)
+			document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
+			onDiscovered( row, col+1)
+		}
+		if ( row+1 < tableGrid.length-1 && col +1 < tableGrid.length && tableGrid [row+1][col+1] !==9 && (tableGrid [row+1][col+1] !== undefined)){
+			console.log(8)
+			console.log(row+1,col+1)
+			document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
+			onDiscovered( row+1, col+1)
+		}
+	} else if (tableGrid[row][col] !== 9) {
 		document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
 	} else if (tableGrid[row][col] === 9) {
 		gameOver()
 		stopChrono()
 	}
+
 }
 
 function gameOver(){
