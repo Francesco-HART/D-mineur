@@ -11,32 +11,26 @@ date2 = 0;
 dateStop = 0;
 chrono = "00"
 
+const BOMB_VALUE = 9
 
+const BOARD_CONFIGS = [
+	{ size: 9, bombs: 10 },
+	{ size: 16, bombs: 40 },
+	{ size: 22, bombs: 100 },
+	{ size: 30, bombs: 250 }
+]
 
-
-function newGame(){
-	console.log(select.value)
-	if (select.value==9) {
-		nbBombes=10
+function newGame() {
+	for (let ruleIndex = 0; ruleIndex < BOARD_CONFIGS.length; ruleIndex++) {
+		const rule = BOARD_CONFIGS[ruleIndex]
+		if (rule.size === parseInt(select.value)) {
+			startChrono()
+			makeGrid(rule.size);
+			makeBomb(rule.bombs);
+			return;
+		}
 	}
-	else if(select.value==16){
-		nbBombes=40
-	}
-	else if(select.value==22){
-		nbBombes=100
-	}
-	else if(select.value==30){
-		nbBombes=250
-	}
-	console.log(nbBombes);
-
-	startChrono()
-	makeGrid(select.value);
-	makeBomb(nbBombes);
 }
-
-
-
 
 function startChrono()
 {
@@ -125,49 +119,35 @@ function makeBomb (nbBomb) {
 		randomRow = Math.floor(Math.random() * tableRow.length)
 		randomColumn = Math.floor(Math.random() * tableGrid.length )
 
-		if(tableGrid[randomRow][randomColumn]===0){
+		if(tableGrid[randomRow][randomColumn]!=9){
 			document.getElementById(randomRow + "|" + randomColumn).className = "bomb"
 			document.getElementById(randomRow + "|" + randomColumn).style='background:green;'
-			tableGrid[randomRow][randomColumn]=9
+			tableGrid[randomRow][randomColumn]= BOMB_VALUE
 
-
-			if(randomRow-1>=0 && randomColumn-1>=0)
-			{
-				tableGrid[randomRow-1][randomColumn-1]+=1;
-			}
-			if (randomRow-1>=0 && randomColumn>=0) {
-				tableGrid[randomRow-1][randomColumn]+=1;
-			}
-			if (randomRow-1>=0 && randomColumn+1<=tableGrid.length-1) {
-				tableGrid[randomRow-1][randomColumn+1]+=1;
-			}
-
-			if (randomColumn-1>=0) {
-				tableGrid[randomRow][randomColumn-1]+=1;
-			}
-			
-		 	if (randomColumn+1<=tableGrid.length-1) {
-				tableGrid[randomRow][randomColumn+1]+=1;
-			}
-
-			if (randomRow+1<=tableGrid.length-1&& randomColumn-1>=0) {
-				tableGrid[randomRow+1][randomColumn-1]+=1;
-			}
-			if (randomRow+1<=tableGrid.length-1 && randomColumn>=0) {
-				tableGrid[randomRow+1][randomColumn]+=1;
-			}
-			if (randomRow+1<=tableGrid.length-1 && randomColumn+1<=tableGrid.length-1) {
-				tableGrid[randomRow+1][randomColumn+1]+=1;
-			}
-
+			updateNeighbors();
 
 			console.log("bomb")
 			}
 			else{
 			i--
 			}
-
 		}
-
 }
 
+function updateNeighbors() {
+	// Définition des indexes de départ
+	const START_ROW_INDEX = randomRow - 1;
+	const END_ROW_INDEX = randomRow + 1;
+	const START_COL_INDEX = randomColumn - 1;
+	const END_COL_INDEX = randomColumn + 1;
+
+	for (let row = START_ROW_INDEX; row <= END_ROW_INDEX; ++row) { // Pour chaque ligne
+		for (let col = START_COL_INDEX; col <= END_COL_INDEX; ++col) { // Pour chaque colonne
+			if (tableGrid[row] !== undefined && tableGrid[row][col] !== undefined && tableGrid[row][col] !== BOMB_VALUE) { // Check si la case existe
+				if ((row !== randomRow || col !== randomColumn)) { // Check si on est  pas sur la case de la bombe
+					tableGrid[row][col]++ // Update de l'état du tableau
+				}
+			}
+		}
+	}
+}
