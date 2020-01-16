@@ -113,11 +113,30 @@ function makeGrid(dim) {
 			cell.style='background-image:url("/Users/Gwenael/Documents/javascript janvier/D-mineur/assets/sprite/normal.png");width:20px; height:20px;'
 			containerRow.appendChild(cell)
 
+			/*
 			cell.addEventListener('click', function(){
 			getValue(this);
 			}, 'once');
+			*/
+			cell.onclick=function(event){
+				getValue(this)
+			}
 			cell.oncontextmenu=function(event){
-				cell.style='background-image:url("/Users/Gwenael/Documents/javascript janvier/D-mineur/assets/sprite/flag.png");width:20px; height:20px;'
+
+				if(cell.style.background_image!=='url("/Users/Gwenael/Documents/javascript janvier/D-mineur/assets/sprite/flag.png")'){
+					cell.style='background-image:url("/Users/Gwenael/Documents/javascript janvier/D-mineur/assets/sprite/flag.png");width:20px; height:20px;'
+					cell.removeEventLister('click', function(){
+						getValue(this);
+					}, 'once');
+				}
+				else {
+					cell.addEventListener('click', function(){
+					getValue(this);
+					}, 'once');
+					cell.style='background-image:url("/Users/Gwenael/Documents/javascript janvier/D-mineur/assets/sprite/normal.png");width:20px; height:20px;'
+				}
+
+				getValue(this)
 			}
 
 			tableRow.push(0)
@@ -165,7 +184,6 @@ function makeBomb (nbBomb) {
 
 
 function gameOver(){
-
 	//document.getElementsByClassName('bomb').style='background-image:url("/Users/Gwenael/Documents/javascript janvier/D-mineur/assets/sprite/mine.png");width:20px; height:20px;'
 	var bombCell = document.getElementsByClassName('bomb')
 	for(var i=0; i<bombCell.length; i++){
