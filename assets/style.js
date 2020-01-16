@@ -12,6 +12,7 @@ dateStop = 0;
 chrono = "00"
 
 const BOMB_VALUE = 9
+const DEFAULTCELL_VALUE = 0
 
 const BOARD_CONFIGS = [
 	{ size: 9, bombs: 10 },
@@ -21,16 +22,16 @@ const BOARD_CONFIGS = [
 ]
 
 function newGame(){
-	while(container.hasChildNodes()){
-		container.removeChild(container.firstChild);
-	}
+	eraseGrid()
+	resetChrono()
 
 	for (let ruleIndex = 0; ruleIndex < BOARD_CONFIGS.length; ruleIndex++) {
 		const rule = BOARD_CONFIGS[ruleIndex]
 		if (rule.size === parseInt(select.value)) {
-			startChrono()
 			makeGrid(rule.size);
 			makeBomb(rule.bombs);
+			startChrono()
+
 			return;
 		}
 	}
@@ -80,7 +81,7 @@ function resetChrono()
 	dateStop = 0;
 	date1 = 0;
 	var i = 0;
-	document.getElementById("chronotime").innerHTML = "00:00";
+	document.getElementById("time").innerHTML = "00:00";
 	var t = document.getElementById("listasupprimer");
 	for(var liste in t){
 		t.parentElement.lastChild.remove();
@@ -96,7 +97,6 @@ function makeGrid(dim) {
 	for (let i = 0; i < (dim ); i++) {
 		containerRow = document.createElement('div')
 		containerRow.id =''+i
-		containerRow.style='display:flex;justify-content:center;align-content:center;padding:0px;'
 
 		tableRow=[]
 		for (let j = 0; j < (dim); j++) {
@@ -119,14 +119,14 @@ function makeGrid(dim) {
 				if(cell.className ==="hidden"){
 					cell.className = "flag"
 				}
-				else if ( cell.className  ) {
+				else if ( cell.className === "flag" ) {
 					cell.className = "hidden"
 				}
 
 				getValue(this)
 			}
 
-			tableRow.push(0)
+			tableRow.push(DEFAULTCELL_VALUE)
 		}
 		container.appendChild(containerRow)
 		tableGrid.push(tableRow)
@@ -141,9 +141,9 @@ function makeBomb (nbBomb) {
 		randomRow = Math.floor(Math.random() * tableRow.length)
 		randomColumn = Math.floor(Math.random() * tableGrid.length )
 
-		if(tableGrid[randomRow][randomColumn]!==9){
+		if(tableGrid[randomRow][randomColumn]!==BOMB_VALUE){
 			document.getElementById(randomRow + "|" + randomColumn).style="hidden"
-			tableGrid[randomRow][randomColumn]=9
+			tableGrid[randomRow][randomColumn]= BOMB_VALUE
 			numCase()
 			}
 		else{
@@ -154,16 +154,16 @@ function makeBomb (nbBomb) {
 
 function onDiscovered(row, col) {
 	console.log('test')
-	if (tableGrid[row][col] !== 9) {
+	if (tableGrid[row][col] !== BOMB_VALUE) {
 
 		document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
-	} else if (tableGrid[row][col] === 9) {
+	} else if (tableGrid[row][col] === BOMB_VALUE) {
 		gameOver()
 		stopChrono()
 	}
 }
 
-function gameOver(){
+function eraseGrid(){
 	while(container.hasChildNodes()){
 		container.removeChild(container.firstChild);
 	}
@@ -182,13 +182,16 @@ function numCase () {
 
 
 function gameOver(){
-	var bombCell = document.getElementsByClassName('b9')
-	for(var i=0; i<bombCell.length; i++){
-		bombCell[i].style='background-image:url("/Users/Gwenael/Documents/javascript janvier/D-mineur/assets/sprite/mine.png");width:20px; height:20px;'
+	for(var i=0; i<tableGrid.length; i++){
+		for (var j=0; j<tableGrid.length; j++){
+			if(tableGrid[i][j] === BOMB_VALUE) {
+				document.getElementById(i + "|" + j).className = "b" + tableGrid[i][j]
+			}
+			var allValues = document.getElementById(i + "|" + j)
+			allValues.disabled = true
+		}
 	}
 }
-
-
 function getValue(cell){
 	console.log(cell)
 	if(cell.className==='bomb'){
