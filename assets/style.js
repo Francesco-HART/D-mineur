@@ -11,31 +11,30 @@ date2 = 0;
 dateStop = 0;
 chrono = "00"
 
+const BOMB_VALUE = 9
 
-
+const BOARD_CONFIGS = [
+	{ size: 9, bombs: 10 },
+	{ size: 16, bombs: 40 },
+	{ size: 22, bombs: 100 },
+	{ size: 30, bombs: 250 }
+]
 
 function newGame(){
-	gameOver();
-	if (select.value==9) {
-		nbBombes=10
-	}
-	else if(select.value==16){
-		nbBombes=40
-	}
-	else if(select.value==22){
-		nbBombes=100
-	}
-	else if(select.value==30){
-		nbBombes=250
+	while(container.hasChildNodes()){
+		container.removeChild(container.firstChild);
 	}
 
-	startChrono()
-	makeGrid(select.value);
-	makeBomb(nbBombes);
+	for (let ruleIndex = 0; ruleIndex < BOARD_CONFIGS.length; ruleIndex++) {
+		const rule = BOARD_CONFIGS[ruleIndex]
+		if (rule.size === parseInt(select.value)) {
+			startChrono()
+			makeGrid(rule.size);
+			makeBomb(rule.bombs);
+			return;
+		}
+	}
 }
-
-
-
 
 function startChrono()
 {
@@ -105,11 +104,27 @@ function makeGrid(dim) {
 
 			containerRow.appendChild(cell)
 			cell.id = i+"|"+j
-			cell.className = "safe"
-			cell.value=0
-			cell.style='width:20px; height:20px;'
+			cell.className = "hidden"
+			cell.setAttribute("onclick", "onDiscovered("+ i + "," + j + ")")
 			containerRow.appendChild(cell)
-			//cell.onclick=getValue
+
+			/*cell.addEventListener('click', function(){
+			getValue(this);
+			}, 'once');
+			cell.onclick=function(event){
+				getValue(this)
+			}*/
+			cell.oncontextmenu=function(event){
+
+				if(cell.className ==="hidden"){
+					cell.className = "flag"
+				}
+				else if ( cell.className  ) {
+					cell.className = "hidden"
+				}
+
+				getValue(this)
+			}
 
 			tableRow.push(0)
 		}
@@ -127,26 +142,9 @@ function makeBomb (nbBomb) {
 		randomColumn = Math.floor(Math.random() * tableGrid.length )
 
 		if(tableGrid[randomRow][randomColumn]!==9){
-			document.getElementById(randomRow + "|" + randomColumn).className = "bomb"
-
-			//document.getElementById(randomRow + "|" + randomColumn).style = 'background-image:url()'
-
-			document.getElementById(randomRow + "|" + randomColumn).style="width:20px; height:20px;"
+			document.getElementById(randomRow + "|" + randomColumn).style="hidden"
 			tableGrid[randomRow][randomColumn]=9
-
-			for(var row=-1; row<=1; row++){
-				for( var col=-1; col<=1; col++){
-					if(((randomRow+row>=0  && randomRow+row<=tableGrid.length-1) && (randomColumn+col>=0 && randomColumn+col<=tableGrid.length-1)) && (row!==0 || col!==0) && tableGrid[randomRow+row][randomColumn+col]!==9)
-					{
-						tableGrid[randomRow+row][randomColumn+col]+=1;
-						document.getElementById((randomRow+row) + "|" + (randomColumn+col)).value ++; 
-						
-						//console.log(document.getElementById((randomRow+row) + "|" + (randomColumn+col))) 
-					}
-				}	
-			}
-
-			console.log("bomb")
+			numCase()
 			}
 		else{
 		i--
@@ -154,6 +152,16 @@ function makeBomb (nbBomb) {
 	}
 }
 
+function onDiscovered(row, col) {
+	console.log('test')
+	if (tableGrid[row][col] !== 9) {
+
+		document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
+	} else if (tableGrid[row][col] === 9) {
+		gameOver()
+		stopChrono()
+	}
+}
 
 function gameOver(){
 	while(container.hasChildNodes()){
@@ -161,6 +169,32 @@ function gameOver(){
 	}
 }
 
+function numCase () {
+	for(var row=-1; row<=1; row++){
+		for( var col=-1; col<=1; col++){
+			if(((randomRow+row>=0  && randomRow+row<=tableGrid.length-1) && (randomColumn+col>=0 && randomColumn+col<=tableGrid.length-1)) && (row!==0 || col!==0) && tableGrid[randomRow+row][randomColumn+col]!==9)
+			{
+				tableGrid[randomRow+row][randomColumn+col]+=1;
+			}
+		}
+	}
+}
+
+
+function gameOver(){
+	var bombCell = document.getElementsByClassName('b9')
+	for(var i=0; i<bombCell.length; i++){
+		bombCell[i].style='background-image:url("/Users/Gwenael/Documents/javascript janvier/D-mineur/assets/sprite/mine.png");width:20px; height:20px;'
+	}
+}
+
+
+function getValue(cell){
+	console.log(cell)
+	if(cell.className==='bomb'){
+		gameOver()
+	}
+}
 
 
 
