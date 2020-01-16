@@ -202,8 +202,8 @@ function discovered(row, col) {
 		gameOver()
 		gameInfo.textContent='Vous avez perdu'
 		alert("VOUS AVEZ PERDU")
-		document.getElementById(row + "|" + col).id = "loose"
-
+		console.log(document.getElementById(row + "|" + col))
+		document.getElementById(row + "|" + col).className = "b9_find"
 	}
 
 }

@@ -133,6 +133,14 @@ h1
 	background-repeat: no-repeat;
 }
 
+.b9_find{
+	margin: 2px;
+	height: 20px;
+	width: 20px;
+	background-repeat: no-repeat;
+	background:red url("../assets/image/bomb_find.png");
+}
+
 
 .b1{
 	background-image: url("../assets/image/1.png");
