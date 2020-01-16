@@ -1,8 +1,3 @@
-/*var b= document.body;
-var new_p = document.createElement('p');
-new_p.textContent = "coizecozico";
-b.prepend(new_p);*/
-
 const container = document.getElementById("container");
 select = document.getElementById('select');
 gameSection = document.getElementById('game');
@@ -110,13 +105,6 @@ function makeGrid(dim) {
 			cell.className = "hidden"
 			cell.setAttribute("onclick", "onResolve("+ i + "," + j + ")")
 			containerRow.appendChild(cell)
-
-			/*cell.addEventListener('click', function(){
-			getValue(this);
-			}, 'once');
-			cell.onclick=function(event){
-				getValue(this)
-			}*/
 			cell.oncontextmenu=function(event){
 
 				if(cell.className ==="hidden" && remainingBomb>0){
@@ -171,10 +159,12 @@ function onResolve(i, j){
 	discovered(i, j)
 	document.getElementById(i + "|" + j).disabled=true
 	win()
+	if (tableGrid[i][j] === 9){
+		loose()
+	}
 }
 
 function discovered(row, col) {
-
 	if ( document.getElementById(row + "|" + col).className === "flag") {
 		gameInfo.textContent='bombe: ' + (remainingBomb)
 		return false
@@ -200,9 +190,6 @@ function discovered(row, col) {
 		document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
 	} else if (tableGrid[row][col] === BOMB_VALUE) {
 		gameOver()
-		gameInfo.textContent='Vous avez perdu'
-		alert("VOUS AVEZ PERDU")
-		console.log(document.getElementById(row + "|" + col))
 		document.getElementById(row + "|" + col).className = "b9_find"
 	}
 
@@ -211,6 +198,10 @@ function discovered(row, col) {
 function eraseGrid(){
 	while(container.hasChildNodes()){
 		container.removeChild(container.firstChild);
+	}
+	var element = document.getElementById("win-loose");
+	while (element.firstChild) {
+		element.removeChild(element.firstChild);
 	}
 }
 
@@ -243,13 +234,50 @@ function gameOver(){
 
 function win(){
 
-	if (document.getElementsByClassName("hidden").length+document.getElementsByClassName("flag").length === nbBomb) {
+	if (document.getElementsByClassName("hidden").length === nbBomb) {
 		gameOver()
 		gameInfo.textContent='Bravo, vous avez gagné'
-		alert("VOUS AVEZ GAGNE")
-
+		var img = document.createElement("img")
+		img.id = "win"
+		document.getElementById("win-loose").appendChild(img)
+		var sound = document.createElement("audio")
+		sound.src = "http://www.ffmages.com/ffvii/ost/disc-1/11-fanfare.mp3"
+		sound.id = "sound-win"
+		sound.setAttribute("autoplay", "true")
+		document.getElementById("win-loose").appendChild(sound)
+		setTimeout(function () {
+			with(document.getElementById("win"))
+			{
+				src = "./assets/image/win.gif"
+			}
+		},4200)
 	}
+}
 
+function loose() {
+	gameInfo.textContent='Vous avez perdu'
+	var img = document.createElement("img")
+	img.src = "./assets/image/explosion.gif"
+	img.id = "loose"
+	document.getElementById("win-loose").appendChild(img)
+	var sound = document.createElement("audio")
+	sound.src = "http://s1download-universal-soundbank.com/mp3/sounds/1422.mp3"
+	sound.id = "sound-loose"
+	sound.setAttribute("autoplay", "true")
+	document.getElementById("win-loose").appendChild(sound)
+	setTimeout(function () {
+		with(document.getElementById("loose"))
+		{
+			src="./assets/image/game-over.gif"
+		}
+	},1800)
+	setTimeout(function () {
+		with(document.getElementById("sound-loose"))
+		{
+			src="https://www.wiizelda.net/mp3/loz/Game%20Over.mp3"
+			autoplay=true
+		}
+	},3000)
 }
 
 
