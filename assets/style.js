@@ -176,8 +176,6 @@ function onResolve(i, j){
 
 function discovered(row, col) {
 	if ( document.getElementById(row + "|" + col).className === "flag") {
-		remainingBomb++
-		NB_FLAG--
 		gameInfo.textContent='bombe: ' + (remainingBomb)
 		return false
 	}
