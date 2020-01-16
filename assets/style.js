@@ -153,9 +153,58 @@ function makeBomb (nbBomb) {
 }
 
 function onDiscovered(row, col) {
-	console.log('test')
-	if (tableGrid[row][col] !== BOMB_VALUE) {
 
+
+	if ( tableGrid [row][col] === 0 && document.getElementById(row + "|" + col).className === "hidden") {
+		if (row - 1>= 0 && col - 1 >= 0 && tableGrid [row-1][col-1] !== 9 && (tableGrid [row-1][col-1] !== undefined)){
+			console.log(1)
+			console.log(row-1,col-1)
+			document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
+			onDiscovered( row-1, col-1)
+		}
+		if ( col-1 >= 0 && tableGrid [row][col-1] !== 9 && (tableGrid [row][col-1] !== undefined)){
+			console.log(2)
+			console.log(row,col-1)
+			document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
+			onDiscovered( row, col-1)
+		}
+		if ( row < tableGrid.length -1  && col -1 >= 0 && tableGrid [row+1][col-1] !==9 && (tableGrid [row+1][col-1] !== undefined)){
+			console.log(3)
+			console.log(row+1,col-1)
+			document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
+			onDiscovered( row+1, col-1)
+		}
+		if ( row -1 >= 0 && tableGrid [row-1][col] !==9 && (tableGrid [row-1][col] !== undefined)){
+			console.log(4)
+			console.log(row-1,col)
+			document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
+			onDiscovered( row-1, col)
+		}
+		if (row < tableGrid.length - 1 && tableGrid [row+1][col] !==9 && (tableGrid [row+1][col] !== undefined)){
+			console.log(5)
+			console.log(row+1,col)
+			document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
+			onDiscovered( row+1, col)
+		}
+		if (row-1 >= 0 && col+1 < tableGrid.length && tableGrid [row-1][col+1] !==9 && (tableGrid [row-1][col+1] !== undefined)){
+			console.log(6)
+			console.log(row-1,col+1)
+			document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
+			onDiscovered( row-1, col+1)
+		}
+		if (col+1 < tableGrid.length  && tableGrid [row][col+1] !==9 && (tableGrid [row][col+1] !== undefined)){
+			console.log(7)
+			console.log(row,col+1)
+			document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
+			onDiscovered( row, col+1)
+		}
+		if ( row+1 < tableGrid.length - 1 && col +1 < tableGrid.length  && tableGrid [row+1][col+1] !==9 && (tableGrid [row+1][col+1] !== undefined)){
+			console.log(8)
+			console.log(row+1,col+1)
+			document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
+			onDiscovered( row+1, col+1)
+		}
+	} else if (tableGrid[row][col] !== 9) {
 		document.getElementById(row + "|" + col).className = "b" + tableGrid[row][col]
 	} else if (tableGrid[row][col] === BOMB_VALUE) {
 		gameOver()
