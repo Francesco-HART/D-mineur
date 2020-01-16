@@ -3,6 +3,7 @@ header
 	display: flex;
 	justify-content: center;
 	align-content: center;
+	width: 100%;
 }
 
 h1
@@ -13,6 +14,7 @@ h1
 	font-family: Verdanna;
 }
 
+
 #setup
 {
 	display: flex;
@@ -22,18 +24,155 @@ h1
 	padding:10px;
 }
 
-#buttonNewGame
+
+
+.setupElement
 {
+	height: 20px;
+	margin: 20px;
+	align-self: center;
+	transition-property: color, filter;
+	transition-duration: .4s;
+	transition-timing-function: ease-out;
 
 }
 
-#select
+.setupElement:hover
 {
-	
+	color: red;
+	filter: drop-shadow(10px 10px 10px  black );
+}
+
+#chrono
+{
+	display: flex;
+	justify-content: center;
+	align-content: center;
 }
 
 #chrono p
 {
 	font-size: 16px;
 	font-weight: 500;
+	align-self: center;
+}
+
+:root {
+	--grid-cols: 1;
+	--grid-rows: 1;
+}
+
+
+#game
+{
+	padding: 20px;
+	background: lightgrey;
+
+}
+
+#container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	grid-gap: 1em;
+	grid-template-rows: repeat(var(--grid-rows), 0fr);
+	grid-template-columns: repeat(var(--grid-cols), 0fr);
+}
+
+.grid-item {
+	padding: 1em;
+	border: 1px solid #ddd;
+	text-align: center;
+}
+
+.hidden {
+	background-image: url("../assets/image/normal.png");
+	margin: 2px;
+	height: 20px;
+	width: 20px;
+	background-repeat: no-repeat;
+}
+
+.flag{
+	background-image: url("../assets/image/flag.png");
+	margin: 2px;
+	height: 20px;
+	width: 20px;
+	background-repeat: no-repeat;
+}
+
+.b0{
+	background-image: url("../assets/image/empty.png");
+	margin: 2px;
+	height: 20px;
+	width: 20px;
+	background-repeat: no-repeat;
+}
+
+.b9{
+	background-image: url("../assets/image/bomb.png");
+	margin: 2px;
+	height: 20px;
+	width: 20px;
+	background-repeat: no-repeat;
+}
+
+
+.b1{
+	background-image: url("../assets/image/1.png");
+	margin: 2px;
+	height: 20px;
+	width: 20px;
+	background-repeat: no-repeat;
+}
+
+.b2{
+	background-image: url("../assets/image/2.png");
+	margin: 2px;
+	height: 20px;
+	width: 20px;
+	background-repeat: no-repeat;
+}
+.b3{
+	background-image: url("../assets/image/3.png");
+	margin: 2px;
+	height: 20px;
+	width: 20px;
+	background-repeat: no-repeat;
+}
+.b4{
+	background-image: url("../assets/image/4.png");
+	margin: 2px;
+	height: 20px;
+	width: 20px;
+	background-repeat: no-repeat;
+}
+.b5{
+	background-image: url("../assets/image/5.png");
+	margin: 2px;
+	height: 20px;
+	width: 20px;
+	background-repeat: no-repeat;
+}
+.b6{
+	background-image: url("../assets/image/6.png");
+	margin: 2px;
+	height: 20px;
+	width: 20px;
+	background-repeat: no-repeat;
+}
+.b7{
+	background-image: url("../assets/image/7.png");
+	margin: 2px;
+	height: 20px;
+	width: 20px;
+	background-repeat: no-repeat;
+}
+
+.b8{
+	background-image: url("../assets/image/8.png");
+	margin: 2px;
+	height: 20px;
+	width: 20px;
+	background-repeat: no-repeat;
 }

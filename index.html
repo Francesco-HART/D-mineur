@@ -3,7 +3,12 @@
 	<head>
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="assets/style.css" />
+		<link rel="shortcut icon" type="image/vdn.microsoft.icon" href="assets/sprite/mine.png" />
 		<title>Démineur</title>
+		<script
+				src="https://code.jquery.com/jquery-3.4.1.js"
+				integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+				crossorigin="anonymous"></script>
 	</head>
 
 
@@ -13,26 +18,28 @@
 		</header>
 
 
-		<section id='setup'>
-			<select id="select">
+		<section  id='setup'>
+			<select class='setupElement' id="select">
 				<option value="9">debutant (9x9, 10 bombes)</option>
 				<option value="16">intermediaire (16x16, 40 bombes)</option>
 				<option value="22">expert (22x22, 100 bombes)</option>
 				<option value="30">maitre (30x30, 250 bombes)</option>
 			</select>
 
-			<button id='buttonNewGame' onclick="newGame();">nouvelle partie</button>
-			
-			<div id='chrono'>
-				<p>
-					Temps: 
-				</p>
+			<button class='setupElement' id='buttonNewGame' onclick="newGame();">nouvelle partie</button>
+
+			<div class='setupElement' id='chrono'>
+				<span>
+					Temps:
+				</span>
+				<span id="time">00:00</span>
 			</div>
 		</section>
 
 
 		<section id="game">
-			
+			<div id="container">
+			</div>
 		</section>
 
 
