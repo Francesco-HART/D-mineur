@@ -268,7 +268,7 @@ function loose() {
 	setTimeout(function () {
 		with(document.getElementById("loose"))
 		{
-			src="./assets/image/game-over.gif"
+			src=""
 		}
 	},1800)
 	setTimeout(function () {
@@ -276,6 +276,10 @@ function loose() {
 		{
 			src="https://www.wiizelda.net/mp3/loz/Game%20Over.mp3"
 			autoplay=true
+		}
+		with(document.getElementById("loose"))
+		{
+			src="./assets/image/game-over.gif"
 		}
 	},3000)
 }
