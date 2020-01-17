@@ -111,12 +111,6 @@ function makeGrid(dim) {
 			cell.setAttribute("onclick", "onResolve("+ i + "," + j + ")")
 			containerRow.appendChild(cell)
 
-			/*cell.addEventListener('click', function(){
-			getValue(this);
-			}, 'once');
-			cell.onclick=function(event){
-				getValue(this)
-			}*/
 			cell.oncontextmenu=function(event){
 
 				if(cell.className ==="hidden" && remainingBomb>0){
@@ -127,15 +121,13 @@ function makeGrid(dim) {
 				}
 				else if ( cell.className === "flag" ) {
 					cell.className = "hidden"
-					cell.onclick=function(event){
-						onResolve(cell.id[0], cell.id[2])
-					}
+					cell.setAttribute("onclick", "onResolve("+ i + "," + j + ")")
 					remainingBomb++
 					NB_FLAG--
 				}
 				gameInfo.textContent='bombe: ' + (remainingBomb)
 
-				getValue(this)
+				isBomb(this)
 			}
 
 			tableRow.push(DEFAULTCELL_VALUE)
@@ -180,8 +172,7 @@ function discovered(row, col) {
 		return false
 	}
 	else{
-				document.getElementById(row + "|" + col).disabled=true
-
+		document.getElementById(row + "|" + col).disabled=true
 	}
 
 
@@ -205,6 +196,8 @@ function discovered(row, col) {
 		console.log(document.getElementById(row + "|" + col))
 		document.getElementById(row + "|" + col).className = "b9_find"
 	}
+	
+
 
 }
 
@@ -254,11 +247,12 @@ function win(){
 
 
 
-function getValue(cell){
+function isBomb(cell){
 	if(cell.className==='bomb'){
 		gameOver()
 	}
 }
+
 
 
 
