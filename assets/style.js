@@ -247,7 +247,7 @@ function win(){
 		setTimeout(function () {
 			with(document.getElementById("win"))
 			{
-				src = "./assets/image/win3.gif"
+				src = "./assets/image/win.gif"
 			}
 		},4200)
 	}
