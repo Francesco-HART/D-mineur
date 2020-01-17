@@ -5,10 +5,6 @@
 		<link rel="stylesheet" href="assets/style.css" />
 		<link rel="shortcut icon" type="image/vdn.microsoft.icon" href="assets/sprite/mine.png" />
 		<title>Démineur</title>
-		<script
-				src="https://code.jquery.com/jquery-3.4.1.js"
-				integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-				crossorigin="anonymous"></script>
 	</head>
 
 
@@ -40,7 +36,13 @@
 		<section id="game">
 			<div id='gameInfo'>
 			</div>
-			<div id="container"  onselectstart="return false" oncontextmenu="return false" ondragstart="return false" onMouseOver="window.status='..message perso .. '; return true;">
+			<div id="win-loose"></div>
+			<div id="container"
+				 onselectstart="return false"
+				 oncontextmenu="return false"
+				 ondragstart="return false"
+				 onMouseOver="window.status='..message perso .. ';
+			 return true;">
 			</div>
 		</section>
 
