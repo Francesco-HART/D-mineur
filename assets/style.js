@@ -115,15 +115,14 @@ function makeGrid(dim) {
 				}
 				else if ( cell.className === "flag" ) {
 					cell.className = "hidden"
-					cell.onclick=function(event){
-						onResolve(cell.id[0], cell.id[2])
-					}
+					cell.className = "hidden"
+					cell.setAttribute("onclick", "onResolve("+ i + "," + j + ")")
 					remainingBomb++
 					NB_FLAG--
 				}
 				gameInfo.textContent='bombe: ' + (remainingBomb)
 
-				getValue(this)
+				//getValue(this)
 			}
 
 			tableRow.push(DEFAULTCELL_VALUE)
@@ -234,7 +233,7 @@ function gameOver(){
 
 function win(){
 
-	if (document.getElementsByClassName("hidden").length === nbBomb) {
+	if (document.getElementsByClassName("hidden").length+document.getElementsByClassName("flag").length  === nbBomb) {
 		gameOver()
 		gameInfo.textContent='Bravo, vous avez gagné'
 		var img = document.createElement("img")
@@ -248,7 +247,7 @@ function win(){
 		setTimeout(function () {
 			with(document.getElementById("win"))
 			{
-				src = "./assets/image/win.gif"
+				src = "./assets/image/win3.gif"
 			}
 		},4200)
 	}
